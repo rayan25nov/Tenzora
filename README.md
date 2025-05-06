@@ -1,50 +1,97 @@
-# React + TypeScript + Vite
+# 🖼️ Tenzora — NFT Marketplace Frontend
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+[![React](https://img.shields.io/badge/React-18.2.0-blue?logo=react)](https://reactjs.org/) [![TailwindCSS](https://img.shields.io/badge/TailwindCSS-3.3.0-blueviolet?logo=tailwindcss)](https://tailwindcss.com/) [![Redux](https://img.shields.io/badge/Redux-4.2.1-purple?logo=redux)](https://redux.js.org/) [![TypeScript](https://img.shields.io/badge/TypeScript-5.2.2-3178C6?logo=typescript)](https://www.typescriptlang.org/) [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 
-Currently, two official plugins are available:
+## 📚 Table of Contents
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+1. [📖 Project Overview](#-project-overview)
+2. [🚀 Key Features](#-key-features)
+3. [🛠️ Technologies Used](#-technologies-used)
+4. [⚙️ Setup Instructions](#-setup-instructions)
+5. [🤝 Contributing](#-contributing)
+6. [📄 License](#-license)
 
-## Expanding the ESLint configuration
+---
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+## 📖 Project Overview
 
-- Configure the top-level `parserOptions` property like this:
+**Tenzora** is a sleek, user-friendly frontend application for an NFT marketplace built on the **Cardano blockchain**. The platform enables users to:
 
-```js
-export default tseslint.config({
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
+- Seamlessly connect their Cardano wallets
+- Discover, mint, buy, and sell NFTs
+- Interact with a decentralized ecosystem through a beautifully responsive UI
+
+Live demo and full backend integration coming soon.
+
+> 🔗 GitHub Repository: [Tenzora on GitHub](https://github.com/rayan25nov/Tenzora)
+
+---
+
+## 🚀 Key Features
+
+- 🔐 **Wallet Integration** — Connect Cardano-compatible wallets via DApp connectors.
+- 🖼️ **NFT Browsing** — Explore trending, auctioned, and influencer-backed NFTs.
+- ⚡ **Real-time Transactions** — Mint and purchase NFTs directly with blockchain interaction.
+- 💅 **Modern UI/UX** — Fully responsive design using Tailwind CSS.
+- 🌐 **Routing & State** — Powered by React Router and Redux Toolkit for smooth navigation and state control.
+
+---
+
+## 🛠️ Technologies Used
+
+| Tech            | Description                             |
+| --------------- | --------------------------------------- |
+| ⚛️ React        | Frontend UI library                     |
+| 🎨 Tailwind CSS | Utility-first styling framework         |
+| 🧠 Redux        | Global state management                 |
+| 🔷 TypeScript   | Typed JavaScript for better reliability |
+| 🌍 React Router | Client-side routing                     |
+| 🔗 Mesh SDK     | Cardano wallet & blockchain interaction |
+
+---
+
+## ⚙️ Setup Instructions
+
+### 📦 Prerequisites
+
+- Node.js (v18 or higher recommended)
+- npm or yarn
+- Git
+
+### 🛠️ Local Development
+
+```bash
+# 1. Clone the repository
+git clone https://github.com/rayan25nov/Tenzora.git
+cd Tenzora
+
+# 2. Install dependencies
+npm install
+
+# 3. Start the development server
+npm run dev
 ```
 
-- Replace `tseslint.configs.recommended` to `tseslint.configs.recommendedTypeChecked` or `tseslint.configs.strictTypeChecked`
-- Optionally add `...tseslint.configs.stylisticTypeChecked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and update the config:
+### 🔧 Environment Variables
 
-```js
-// eslint.config.js
-import react from 'eslint-plugin-react'
+Create a `.env` file if needed for future backend integrations. None are required at this stage.
 
-export default tseslint.config({
-  // Set the react version
-  settings: { react: { version: '18.3' } },
-  plugins: {
-    // Add the react plugin
-    react,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended rules
-    ...react.configs.recommended.rules,
-    ...react.configs['jsx-runtime'].rules,
-  },
-})
-```
+---
+
+## 🤝 Contributing
+
+We welcome contributions from the community!
+
+- 🐛 Report bugs
+- 🌟 Suggest features
+- 📥 Submit pull requests
+
+---
+
+## 📄 License
+
+This project is licensed under the **MIT License**. See the [LICENSE](LICENSE) file for more details.
+
+---
+
+> Made with ❤️ by [Rayan Ahmad](https://github.com/rayan25nov)
