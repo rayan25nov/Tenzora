@@ -2,8 +2,8 @@ import Button from "./ui/Button";
 import { Avatar, AvatarImage } from "./ui/Avatar";
 import Logo_T from "../assets/images/logo_T2.png";
 import UserProfile from "../assets/images/user_profile.png";
-import { useDispatch, useSelector } from "react-redux";
-import { RootState } from "../redux/store";
+import { useDispatch } from "react-redux";
+// import { RootState } from "../redux/store";
 import { BrowserWallet } from "@meshsdk/core";
 import { useState } from "react";
 import { useLocation } from "react-router-dom";
@@ -21,11 +21,11 @@ type Wallet = {
 
 const Navbar = () => {
   const dispatch = useDispatch();
-  const walletAddress = useSelector(
-    (state: RootState) => state.wallet.walletAddress
-  );
+  // const walletAddress = useSelector(
+  //   (state: RootState) => state.wallet.walletAddress
+  // );
 
-  const [isOpen, setIsOpen] = useState(false);
+  // const [isOpen, setIsOpen] = useState(false);
   const location = useLocation();
   const [wallets, setWallets] = useState<Wallet[]>([]);
   const [popupOpen, setPopupOpen] = useState(false);
