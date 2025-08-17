@@ -11,6 +11,7 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@meshsdk/contract": "^1.9.0-beta.71",
     "@meshsdk/core": "^1.9.0-beta-40",
     "@reduxjs/toolkit": "^2.7.0",
     "@tailwindcss/vite": "^4.1.2",

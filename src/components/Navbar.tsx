@@ -5,6 +5,7 @@ import UserProfile from "../assets/images/user_profile.png";
 import { useDispatch } from "react-redux";
 // import { RootState } from "../redux/store";
 import { BrowserWallet } from "@meshsdk/core";
+import {} from "@meshsdk/contract"
 import { useState } from "react";
 import { useLocation } from "react-router-dom";
 import { toast } from "sonner";
