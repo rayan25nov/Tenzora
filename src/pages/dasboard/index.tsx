@@ -3,8 +3,9 @@ import Button from "../../components/ui/Button";
 import Simpson from "../../assets/images/simpson.jpg";
 import LivingOfArt from "../../assets/images/woman-7858063_1280.jpg";
 import Warrior from "../../assets/images/warrior.jpeg";
-import MilkyWay from "../../components/MilkyWay";
-
+import MilkyWay from "../../assets/images/milky_way.svg";
+import WalletSupport from "@/components/WalletSupport";
+import HowItWorks from "@/components/HowItWorks";
 const HeroSection: React.FC = () => {
   return (
     <section className="relative bg-black text-white overflow-hidden py-20">
@@ -48,14 +49,24 @@ const HeroSection: React.FC = () => {
           />
           {/* Right card */}
           <NFTCard
-            title="Statue Of Vughae"
+            title="Strong Warrior"
             price="200"
             imageUrl={Warrior}
             className="relative z-10 -translate-x-1/4 top-10"
           />
         </div>
       </div>
-      <MilkyWay />
+      {/* Milky Way Background Image */}
+      <img
+        src={MilkyWay}
+        alt="Milky Way"
+        className="w-full pointer-events-none select-none"
+      />
+      {/* Wallet we support section */}
+      <WalletSupport />
+
+      {/* How it works */}
+      <HowItWorks />
     </section>
   );
 };

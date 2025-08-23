@@ -1,15 +1,15 @@
 import Button from "./ui/Button";
-import { Avatar, AvatarImage } from "./ui/Avatar";
-import Logo_T from "../assets/images/logo_T2.png";
-import UserProfile from "../assets/images/user_profile.png";
+import { Avatar, AvatarImage } from "@/components/ui/Avatar";
+import Logo_T from "@/assets/images/logo_T2.png";
+import UserProfile from "@/assets/images/user_profile.png";
 import { useDispatch } from "react-redux";
 // import { RootState } from "../redux/store";
 import { BrowserWallet } from "@meshsdk/core";
-import {} from "@meshsdk/contract"
+import {} from "@meshsdk/contract";
 import { useState } from "react";
 import { useLocation } from "react-router-dom";
 import { toast } from "sonner";
-import { setWallet } from "../redux/walletSlice";
+import { setWallet } from "@/redux/walletSlice";
 import Popup from "./Popup";
 import { Link } from "react-router-dom";
 
@@ -111,6 +111,7 @@ const Navbar = () => {
       {/* Wallet Button & Profile */}
       <div className="flex items-center gap-x-6">
         <Button onClick={connectWallet}>Connect Wallet</Button>
+
         <Avatar>
           <AvatarImage src={UserProfile} alt="User Avatar" />
         </Avatar>
