@@ -37,6 +37,13 @@ const Navbar = () => {
   const connectWallet = async () => {
     // console.log("Connecting wallet...");
     const availableWallets = await BrowserWallet.getAvailableWallets();
+    if (availableWallets.length === 0) {
+      toast.error(
+        "No wallets found. Please install a Cardano wallet extension.",
+        { closeButton: true }
+      );
+      return;
+    }
     // console.log(availableWallets);
     setWallets(availableWallets);
     setPopupOpen(true);
