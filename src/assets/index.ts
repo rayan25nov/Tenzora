@@ -8,6 +8,13 @@ import WalletIcon from "./images/wallet-line.svg";
 import CollectionIcon from "./images/collection.svg";
 import NftIcon from "./images/add-nft.svg";
 import SaleIcon from "./images/sale.svg";
+import Enchantress from "./images/enchantress.png";
+import Hela from "./images/hela.png";
+import Anime from "./images/Anime.jpeg";
+import Ape from "./images/ape.png";
+import Cat from "./images/cat.jpeg";
+import Loki from "./images/loki.png";
+import Freyja from "./images/freyja.png";
 
 // …then bundle them up in one module
 export {
@@ -20,4 +27,11 @@ export {
   CollectionIcon,
   NftIcon,
   SaleIcon,
+  Enchantress,
+  Hela,
+  Anime,
+  Ape,
+  Cat,
+  Loki,
+  Freyja,
 };

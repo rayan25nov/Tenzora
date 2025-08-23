@@ -12,6 +12,7 @@ import { toast } from "sonner";
 import { setWallet } from "@/redux/walletSlice";
 import Popup from "./Popup";
 import { Link } from "react-router-dom";
+import { WalletMinimal } from "lucide-react";
 
 type Wallet = {
   icon: string;
@@ -77,6 +78,16 @@ const Navbar = () => {
           EXPLORE
         </Link>
         <Link
+          to="/our-collection"
+          className={`${
+            isActive("/our-collection")
+              ? "text-[#AD1AAF] font-semibold"
+              : "text-gray-200"
+          } hover:text-[#9C19A3] transition`}
+        >
+          OUR COLLECTION
+        </Link>
+        <Link
           to="/trending"
           className={`${
             isActive("/trending")
@@ -87,30 +98,24 @@ const Navbar = () => {
           TRENDING NFTs
         </Link>
         <Link
-          to="/auctioned"
+          to="/create-nft"
           className={`${
-            isActive("/auctioned")
+            isActive("/create-nft")
               ? "text-[#AD1AAF] font-semibold"
               : "text-gray-200"
           } hover:text-[#9C19A3] transition`}
         >
-          AUCTIONED NFTs
-        </Link>
-        <Link
-          to="/influencers"
-          className={`${
-            isActive("/influencers")
-              ? "text-[#AD1AAF] font-semibold"
-              : "text-gray-200"
-          } hover:text-[#9C19A3] transition`}
-        >
-          INFLUENCERS
+          CREATE NFTs
         </Link>
       </div>
 
       {/* Wallet Button & Profile */}
       <div className="flex items-center gap-x-6">
-        <Button onClick={connectWallet}>Connect Wallet</Button>
+        <Button
+          onClick={connectWallet}
+          text="Connect Wallet"
+          icon={<WalletMinimal />}
+        />
 
         <Avatar>
           <AvatarImage src={UserProfile} alt="User Avatar" />

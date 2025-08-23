@@ -6,6 +6,8 @@ import Warrior from "../../assets/images/warrior.jpeg";
 import MilkyWay from "../../assets/images/milky_way.svg";
 import WalletSupport from "@/components/WalletSupport";
 import HowItWorks from "@/components/HowItWorks";
+import CollectionCarousel from "@/components/OurCollection";
+import { ImageUpscale, Binoculars } from "lucide-react";
 const HeroSection: React.FC = () => {
   return (
     <section className="relative bg-black text-white overflow-hidden py-20">
@@ -23,12 +25,17 @@ const HeroSection: React.FC = () => {
             Cardano
           </p>
           <div className="mt-8 flex space-x-4">
-            <Button onClick={() => console.log("Explore More clicked")}>
-              Explore More
-            </Button>
-            <Button onClick={() => console.log("create clicked")}>
-              Create
-            </Button>
+            <Button
+              onClick={() => console.log("Explore More clicked")}
+              text="Explore More"
+              icon={<Binoculars />}
+            />
+
+            <Button
+              onClick={() => console.log("create clicked")}
+              text="Create"
+              icon={<ImageUpscale />}
+            />
           </div>
         </div>
 
@@ -67,6 +74,9 @@ const HeroSection: React.FC = () => {
 
       {/* How it works */}
       <HowItWorks />
+
+      {/* Our Collection */}
+      <CollectionCarousel />
     </section>
   );
 };
