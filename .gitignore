@@ -1,7 +1,4 @@
-# Logs
-.env
-.env.*
-.env.development.local
+
 logs
 *.log
 npm-debug.log*
@@ -27,3 +24,4 @@ dist-ssr
 *.sw?
 
 .vercel.env
+.env
