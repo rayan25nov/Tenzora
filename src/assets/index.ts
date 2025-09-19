@@ -15,6 +15,9 @@ import Ape from "./images/ape.png";
 import Cat from "./images/cat.jpeg";
 import Loki from "./images/loki.png";
 import Freyja from "./images/freyja.png";
+import Cardano from "./images/Cardano.svg";
+import File from "./images/file.svg";
+import Mint from "./images/mint.png";
 
 // …then bundle them up in one module
 export {
@@ -34,4 +37,7 @@ export {
   Cat,
   Loki,
   Freyja,
+  Cardano,
+  File,
+  Mint,
 };

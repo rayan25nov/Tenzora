@@ -5,14 +5,15 @@ import UserProfile from "@/assets/images/user_profile.png";
 import { useDispatch } from "react-redux";
 // import { RootState } from "../redux/store";
 import { BrowserWallet } from "@meshsdk/core";
-import {} from "@meshsdk/contract";
 import { useState } from "react";
 import { useLocation } from "react-router-dom";
 import { toast } from "sonner";
-import { setWallet } from "@/redux/walletSlice";
+import { disconnectWallet, setWallet } from "@/redux/walletSlice";
 import Popup from "./Popup";
 import { Link } from "react-router-dom";
 import { WalletMinimal } from "lucide-react";
+import { useSelector } from "react-redux";
+import { RootState } from "@/redux/store";
 
 type Wallet = {
   icon: string;
@@ -23,9 +24,9 @@ type Wallet = {
 
 const Navbar = () => {
   const dispatch = useDispatch();
-  // const walletAddress = useSelector(
-  //   (state: RootState) => state.wallet.walletAddress
-  // );
+  const walletAddress = useSelector(
+    (state: RootState) => state.wallet.walletAddress
+  );
 
   // const [isOpen, setIsOpen] = useState(false);
   const location = useLocation();
@@ -64,6 +65,17 @@ const Navbar = () => {
         toast.error("An unknown error occurred");
       }
     }
+  };
+
+  const disconnect = async () => {
+    // try {
+    //   await signOutOnServer();
+    // } catch (err) {
+    //   toast.error("Failed to sign out from server", {
+    //     closeButton: true,
+    //   });
+    // }
+    dispatch(disconnectWallet());
   };
 
   return (
@@ -118,11 +130,25 @@ const Navbar = () => {
 
       {/* Wallet Button & Profile */}
       <div className="flex items-center gap-x-6">
-        <Button
-          onClick={connectWallet}
-          text="Connect Wallet"
-          icon={<WalletMinimal />}
-        />
+        {!walletAddress ? (
+          <Button
+            onClick={connectWallet}
+            text="Connect Wallet"
+            icon={<WalletMinimal />}
+          />
+        ) : (
+          <div className="flex items-center space-x-4">
+            <span className="text-gray-800 font-medium bg-gray-100 px-3 py-1 rounded-lg">
+              {walletAddress.slice(0, 6)}...{walletAddress.slice(-4)}
+            </span>
+            <button
+              onClick={disconnect}
+              className="text-red-600 hover:text-red-800 text-sm font-medium"
+            >
+              Disconnect
+            </button>
+          </div>
+        )}
 
         <Avatar>
           <AvatarImage src={UserProfile} alt="User Avatar" />

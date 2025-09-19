@@ -11,7 +11,7 @@ const Button: React.FC<ButtonProps> = ({ text, onClick, icon }) => {
   return (
     <button
       onClick={onClick}
-      className="flex items-center justify-center px-4 py-2 space-x-4 rounded-sm bg-[#AD1AAF] text-white hover:bg-[#9C19A3] transition-colors duration-200"
+      className="flex items-center justify-center px-4 py-2 space-x-4 bg-[#AD1AAF] text-white hover:bg-[#9C19A3] transition-colors duration-200 cursor-pointer rounded-sm"
       type="button"
     >
       {/* render icon here */}

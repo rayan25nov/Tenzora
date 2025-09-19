@@ -1,9 +1,9 @@
-import { NFTCard } from "../../components/NFTCard";
-import Button from "../../components/ui/Button";
-import Simpson from "../../assets/images/simpson.jpg";
-import LivingOfArt from "../../assets/images/woman-7858063_1280.jpg";
-import Warrior from "../../assets/images/warrior.jpeg";
-import MilkyWay from "../../assets/images/milky_way.svg";
+import { NFTCard } from "@/components/NFTCard";
+import Button from "@/components/ui/Button";
+import Simpson from "@/assets/images/simpson.jpg";
+import LivingOfArt from "@/assets/images/woman-7858063_1280.jpg";
+import Warrior from "@/assets/images/warrior.jpeg";
+import MilkyWay from "@/assets/images/milky_way.svg";
 import WalletSupport from "@/components/WalletSupport";
 import HowItWorks from "@/components/HowItWorks";
 import CollectionCarousel from "@/components/OurCollection";
