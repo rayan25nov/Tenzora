@@ -18,6 +18,7 @@ import Freyja from "./images/freyja.png";
 import Cardano from "./images/Cardano.svg";
 import File from "./images/file.svg";
 import Mint from "./images/mint.png";
+import MilkyWay from "./images/milky_way.svg";
 
 // …then bundle them up in one module
 export {
@@ -40,4 +41,5 @@ export {
   Cardano,
   File,
   Mint,
+  MilkyWay,
 };

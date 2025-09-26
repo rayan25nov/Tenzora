@@ -12,6 +12,7 @@ import {
   Network,
   WalletApi,
   fromText,
+  toText,
 } from "lucid-cardano";
 import axios from "axios";
 
@@ -239,30 +240,105 @@ class Cardano {
     }
   };
 
+  // public listNft = async (
+  //   wallet: BrowserWallet,
+  //   policyId: string,
+  //   assetName: string,
+  //   priceInAda: number,
+  //   adminFeePercent: number = 500 // 5% in basis points
+  // ): Promise<TxHash> => {
+  //   try {
+  //     const walletApi = this.meshToLucidAdapter(wallet.walletInstance);
+  //     // initialize lucid if not initialized
+  //     if (!this.lucidInstance) {
+  //       const networkId = await walletApi.getNetworkId();
+  //       await this.init(networkId);
+  //     }
+  //     const lucid = this.getLucid();
+  //     lucid.selectWallet(walletApi);
+  //     const sellerAddress = await this.lucidInstance.wallet.address();
+  //     const { pkh: sellerPKH, skh: sellerSKH } = this.getKeyHash(sellerAddress);
+
+  //     // Get admin PKH (you can change this to your admin address)
+  //     const adminPKH = sellerPKH; // Using seller as admin for demo
+  //     const adminSKH = sellerSKH;
+
+  //     const unit = policyId + assetName;
+  //     const priceInLovelace = BigInt(priceInAda * 1_000_000);
+
+  //     const datumToLock = new Constr(0, [
+  //       sellerPKH,
+  //       sellerSKH,
+  //       priceInLovelace,
+  //       policyId,
+  //       assetName,
+  //       BigInt(adminFeePercent),
+  //       adminPKH,
+  //       adminSKH,
+  //     ]);
+
+  //     // List redeemer - Constr with index 0 (List action)
+  //     //   const redeemer = Data.to(new Constr(0, []));
+
+  //     const tx = await this.lucidInstance
+  //       .newTx()
+  //       .payToContract(
+  //         this.getMarketplaceAddress(),
+  //         { inline: Data.to(datumToLock) },
+  //         { [unit]: 1n }
+  //       )
+  //       .addSigner(sellerAddress)
+  //       .complete();
+
+  //     const signedTx = await tx.sign().complete();
+  //     const txHash = await signedTx.submit();
+
+  //     console.log(`NFT listed successfully! TxHash: ${txHash}`);
+  //     return txHash;
+  //   } catch (error) {
+  //     console.error("List NFT error:", error);
+  //     throw error;
+  //   }
+  // };
+
   public listNft = async (
     wallet: BrowserWallet,
-    policyId: string,
-    assetName: string,
+    tokenName: string,
     priceInAda: number,
-    adminFeePercent: number = 500 // 5% in basis points
+    adminFeePercent: number = 500
   ): Promise<TxHash> => {
     try {
       const walletApi = this.meshToLucidAdapter(wallet.walletInstance);
-      // initialize lucid if not initialized
+
+      // Initialize lucid if not initialized
       if (!this.lucidInstance) {
         const networkId = await walletApi.getNetworkId();
         await this.init(networkId);
       }
+
       const lucid = this.getLucid();
       lucid.selectWallet(walletApi);
       const sellerAddress = await this.lucidInstance.wallet.address();
       const { pkh: sellerPKH, skh: sellerSKH } = this.getKeyHash(sellerAddress);
 
-      // Get admin PKH (you can change this to your admin address)
-      const adminPKH = sellerPKH; // Using seller as admin for demo
+      // Get admin PKH
+      const adminPKH = sellerPKH;
       const adminSKH = sellerSKH;
 
-      const unit = policyId + assetName;
+      // Convert token name to hex
+      const tokenNameHex = fromText(tokenName);
+
+      // Find the matching token in wallet
+      const matchingToken = await this.findTokenByAssetName(
+        walletApi,
+        tokenNameHex
+      );
+
+      if (!matchingToken) {
+        throw new Error(`Token with name "${tokenName}" not found in wallet`);
+      }
+
+      const { policyId, assetName, unit } = matchingToken;
       const priceInLovelace = BigInt(priceInAda * 1_000_000);
 
       const datumToLock = new Constr(0, [
@@ -275,9 +351,6 @@ class Cardano {
         adminPKH,
         adminSKH,
       ]);
-
-      // List redeemer - Constr with index 0 (List action)
-      //   const redeemer = Data.to(new Constr(0, []));
 
       const tx = await this.lucidInstance
         .newTx()
@@ -292,7 +365,8 @@ class Cardano {
       const signedTx = await tx.sign().complete();
       const txHash = await signedTx.submit();
 
-      console.log(`NFT listed successfully! TxHash: ${txHash}`);
+      console.log(`NFT "${tokenName}" listed successfully! TxHash: ${txHash}`);
+      console.log(`Policy ID: ${policyId}, Asset Name: ${assetName}`);
       return txHash;
     } catch (error) {
       console.error("List NFT error:", error);
@@ -510,6 +584,106 @@ class Cardano {
     const last8digits = parseInt(timestamp.toString().slice(-8));
     return fromText(last8digits.toString());
   }
+
+  // Main function to find token by asset name
+  private findTokenByAssetName = async (
+    walletApi: any,
+    targetAssetNameHex: string
+  ): Promise<{ policyId: string; assetName: string; unit: string } | null> => {
+    try {
+      // Get all UTXOs from the wallet
+      const utxos = await walletApi.getUtxos();
+
+      // Search through all UTXOs for matching tokens
+      for (const utxo of utxos) {
+        if (utxo.assets) {
+          for (const [unit, _quantity] of Object.entries(utxo.assets)) {
+            if (unit === "lovelace") continue;
+
+            // Parse the unit (policyId + assetName)
+            const policyId = unit.slice(0, 56); // First 56 chars are policy ID
+            const assetNameHex = unit.slice(56); // Rest is asset name
+
+            // Check if this matches our target
+            if (this.isAssetNameMatch(assetNameHex, targetAssetNameHex)) {
+              return {
+                policyId,
+                assetName: assetNameHex,
+                unit,
+              };
+            }
+          }
+        }
+      }
+
+      return null; // No matching token found
+    } catch (error) {
+      console.error("Error finding token:", error);
+      return null;
+    }
+  };
+
+  // Enhanced matching function with multiple strategies
+  private isAssetNameMatch = (
+    assetNameHex: string,
+    targetAssetNameHex: string
+  ): boolean => {
+    // Strategy 1: Direct hex comparison
+    if (assetNameHex.toLowerCase() === targetAssetNameHex.toLowerCase()) {
+      return true;
+    }
+
+    // Strategy 2: Convert both to string and compare
+    try {
+      const assetNameString = fromText(assetNameHex);
+      const targetAssetNameString = toText(targetAssetNameHex);
+
+      if (
+        assetNameString.toLowerCase() === targetAssetNameString.toLowerCase()
+      ) {
+        return true;
+      }
+    } catch {
+      // Ignore conversion errors
+    }
+
+    // Strategy 3: Check if target name is contained in asset name
+    try {
+      const assetNameString = toText(assetNameHex);
+      const targetAssetNameString = toText(targetAssetNameHex);
+
+      if (
+        assetNameString
+          .toLowerCase()
+          .includes(targetAssetNameString.toLowerCase())
+      ) {
+        return true;
+      }
+    } catch {
+      // Ignore conversion errors
+    }
+
+    return false;
+  };
+
+  private isNftAlreadyListed = async (unit: string): Promise<boolean> => {
+    try {
+      const marketplaceAddress = this.getMarketplaceAddress();
+      const utxos = await this.lucidInstance.getUtxosAt(marketplaceAddress);
+
+      // Check if any UTXO contains this specific NFT unit
+      for (const utxo of utxos) {
+        if (utxo.assets && utxo.assets[unit]) {
+          return true; // NFT is already listed
+        }
+      }
+
+      return false; // NFT is not listed
+    } catch (error) {
+      console.error("Error checking if NFT is listed:", error);
+      return false; // Assume not listed on error
+    }
+  };
 }
 
 // create a singleton instance

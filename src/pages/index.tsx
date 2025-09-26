@@ -1,14 +1,23 @@
-import { NFTCard } from "@/components/NFTCard";
 import Button from "@/components/ui/Button";
-import Simpson from "@/assets/images/simpson.jpg";
-import LivingOfArt from "@/assets/images/woman-7858063_1280.jpg";
-import Warrior from "@/assets/images/warrior.jpeg";
-import MilkyWay from "@/assets/images/milky_way.svg";
+import { MilkyWay } from "@/assets";
 import WalletSupport from "@/components/WalletSupport";
 import HowItWorks from "@/components/HowItWorks";
 import CollectionCarousel from "@/components/OurCollection";
 import { ImageUpscale, Binoculars } from "lucide-react";
+import NFTShowcase from "@/components/NFTShowcase";
+import { useNavigate } from "react-router-dom";
+import { useCallback, useRef } from "react";
 const HeroSection: React.FC = () => {
+  const navigate = useNavigate();
+  // 1. Create a ref on the element at the bottom of the page
+  const bottomRef = useRef<HTMLDivElement>(null);
+
+  // 2. Extract a scroll handler
+  const scrollToBottom = useCallback(() => {
+    if (bottomRef.current) {
+      bottomRef.current.scrollIntoView({ behavior: "smooth" });
+    }
+  }, []);
   return (
     <section className="relative bg-black text-white overflow-hidden py-20">
       <div className="container mx-auto px-6 lg:px-20 flex flex-col lg:flex-row items-center">
@@ -26,42 +35,19 @@ const HeroSection: React.FC = () => {
           </p>
           <div className="mt-8 flex space-x-4">
             <Button
-              onClick={() => console.log("Explore More clicked")}
+              onClick={scrollToBottom}
               text="Explore More"
               icon={<Binoculars />}
             />
 
             <Button
-              onClick={() => console.log("create clicked")}
+              onClick={() => navigate("/create-nft")}
               text="Create"
               icon={<ImageUpscale />}
             />
           </div>
         </div>
-
-        <div className="lg:w-1/2 relative mt-12 lg:mt-0 flex justify-center">
-          {/* Left card */}
-          <NFTCard
-            title="Simpson"
-            price="150"
-            imageUrl={Simpson}
-            className="z-10 translate-x-1/3"
-          />
-          {/* Middle card - bring up and on top */}
-          <NFTCard
-            title="Living Of The Art"
-            price="100"
-            imageUrl={LivingOfArt}
-            className="absolute z-20 -top-10"
-          />
-          {/* Right card */}
-          <NFTCard
-            title="Strong Warrior"
-            price="200"
-            imageUrl={Warrior}
-            className="relative z-10 -translate-x-1/4 top-10"
-          />
-        </div>
+        <NFTShowcase />
       </div>
       {/* Milky Way Background Image */}
       <img
@@ -75,6 +61,7 @@ const HeroSection: React.FC = () => {
       {/* How it works */}
       <HowItWorks />
 
+      <div ref={bottomRef} className="h-1" />
       {/* Our Collection */}
       <CollectionCarousel />
     </section>

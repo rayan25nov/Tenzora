@@ -11,6 +11,7 @@ import { BrowserWallet } from "@meshsdk/core";
 import { useSelector } from "react-redux";
 import { AppDispatch, RootState } from "./redux/store";
 import { useDispatch } from "react-redux";
+import MarketPlace from "./components/MarketPlace";
 
 export const WalletContext = React.createContext<BrowserWallet | null>(null);
 function App() {
@@ -59,6 +60,7 @@ function App() {
             <Routes>
               <Route path="/" element={<Dashboard />} />
               <Route path="/create-nft" element={<CreateNFT />} />
+              <Route path="/market-place" element={<MarketPlace />} />
             </Routes>
           </main>
 

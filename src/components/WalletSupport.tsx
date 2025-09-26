@@ -13,10 +13,10 @@ const wallets = [
 
 const WalletSupport: React.FC = () => (
   <div className="mt-20 flex flex-col items-center">
-    <h2 className="text-transparent bg-clip-text bg-gradient-to-r from-[#fff] to-[#F81DFB] text-xl mt-4 mb-12 font-semibold">
+    <h2 className="text-transparent bg-clip-text bg-gradient-to-r from-[#fff] to-[#F81DFB] text-xl mt-4 mb-12 font-semibold mx-5">
       Trade With World&apos;s Most Trusted And Fastest Wallets
     </h2>
-    <h1 className="text-white text-7xl mb-20">Wallets We Support</h1>
+    <h1 className="text-white text-7xl mb-20 mx-5">Wallets We Support</h1>
     <div className="flex flex-row justify-center flex-wrap gap-5">
       {wallets.map((wallet) => (
         <WalletCard key={wallet.name} name={wallet.name} logo={wallet.logo} />
