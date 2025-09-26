@@ -666,24 +666,24 @@ class Cardano {
     return false;
   };
 
-  private isNftAlreadyListed = async (unit: string): Promise<boolean> => {
-    try {
-      const marketplaceAddress = this.getMarketplaceAddress();
-      const utxos = await this.lucidInstance.getUtxosAt(marketplaceAddress);
+  // private isNftAlreadyListed = async (unit: string): Promise<boolean> => {
+  //   try {
+  //     const marketplaceAddress = this.getMarketplaceAddress();
+  //     const utxos = await this.lucidInstance.getUtxosAt(marketplaceAddress);
 
-      // Check if any UTXO contains this specific NFT unit
-      for (const utxo of utxos) {
-        if (utxo.assets && utxo.assets[unit]) {
-          return true; // NFT is already listed
-        }
-      }
+  //     // Check if any UTXO contains this specific NFT unit
+  //     for (const utxo of utxos) {
+  //       if (utxo.assets && utxo.assets[unit]) {
+  //         return true; // NFT is already listed
+  //       }
+  //     }
 
-      return false; // NFT is not listed
-    } catch (error) {
-      console.error("Error checking if NFT is listed:", error);
-      return false; // Assume not listed on error
-    }
-  };
+  //     return false; // NFT is not listed
+  //   } catch (error) {
+  //     console.error("Error checking if NFT is listed:", error);
+  //     return false; // Assume not listed on error
+  //   }
+  // };
 }
 
 // create a singleton instance
